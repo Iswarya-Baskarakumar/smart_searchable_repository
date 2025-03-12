@@ -106,17 +106,17 @@ def delete_snippet(snippet_id):
     conn.commit()
     conn.close()
 
-st.title("Code Snippet Library")
+st.title("📚 Code Snippet Library")
 
 total_snippets = get_snippet_count()
 top_contributor, top_contributions = get_top_contribute()
 
-st.write(f"Total snippets: {total_snippets}")
-st.write(f"Top contributor: {top_contributor} ({top_contributions} snippets)")
+st.write(f"📌 Total snippets: {total_snippets}")
+st.write(f"🏆 Top contributor: {top_contributor} ({top_contributions} snippets)")
 
-search_query = st.text_input("Search by title:")
-language_filter = st.selectbox("Filter by language", get_languages())
-tag_filter = st.text_input("Filter by tag")
+search_query = st.text_input("🔍Search by title:")
+language_filter = st.selectbox("📌 Filter by language", get_languages())
+tag_filter = st.text_input("🏷️ Filter by tag")
 
 snippets = fetch_snippets(search_query, language_filter, tag_filter)
 
@@ -143,18 +143,18 @@ if snippets:
                     update_submitted = st.form_submit_button("Update Snippet")
                     if update_submitted:
                         update_snippet(snippet['id'], new_title, new_language, new_use_case, new_tags, new_code)
-                        st.success("Snippet updated successfully")
+                        st.success("✅ Snippet updated successfully")
                         st.rerun()
                         
-            if col2.button("Delete", key=f"delete_{snippet['id']}"):
+            if col2.button("❌ Delete", key=f"delete_{snippet['id']}"):
                 delete_snippet(snippet['id'])
-                st.success("Snippet deleted successfully")
+                st.warning("⚠️ Snippet deleted successfully")
                 st.rerun()                           
                             
 else:
-    st.write("No snippets Available. Please try differenet filters or search.")     
+    st.write("🚫 No snippets Available. Please try differenet filters or search.")     
             
-st.sidebar.title(" Add New Snippet")
+st.sidebar.title("➕ Add New Snippet")
 
 with st.sidebar.form("snippet_form"):
     title = st.text_input("Snippet Title")
@@ -170,9 +170,9 @@ with st.sidebar.form("snippet_form"):
     if submitted:
         if title and language and use_case and code and author:
             insert_snippet(title, language, use_case, tags, code, author)
-            st.sidebar.success("Snippet added successfully")
+            st.sidebar.success("✅ Snippet added successfully")
             st.rerun()
         else:
-            st.sidebar.error("All fields are required")     
+            st.sidebar.error("❌ All fields are required")     
                    
                                    
